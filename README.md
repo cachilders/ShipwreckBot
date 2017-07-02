@@ -21,3 +21,9 @@ We use [conda](https://conda.io/docs/index.html) to manage our environment. Assu
 conda env create -f environment.yml  # first time you develop
 source activate ship_env             # every time you develop
 ```
+## 3. Testing
+
+We use [nose](http://nose.readthedocs.io/en/latest/) to run tests. Assuming you've installed nose, use ...  
+```
+nosetests test.py
+```

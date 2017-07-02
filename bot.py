@@ -1,12 +1,14 @@
+import os
 from random import choice
-from utils import csv_to_dict, send_tweet
+import tweepy
+from utils import csv_to_dict
 
 
 class Bot:
-
     def __init__(self):
         self.base_tweet = "%s %s %s's %s %s %s"
         self.init_tables()
+        self.init_api()
 
     def init_tables(self):
         # read data files
@@ -17,7 +19,17 @@ class Bot:
         self.parts = csv_to_dict('csv/parts.csv')
         self.adjectives = csv_to_dict('csv/adjectives.csv')
 
-    def random_tweet(self, tags=[]):
+    def init_api(self):
+        consumer_key = os.getenv("TWITTER_CONSUMER_TOKEN")
+        consumer_secret = os.getenv("TWITTER_CONSUMER_SECRET")
+        access_token = os.getenv("TWITTER_ACCESS_TOKEN")
+        access_token_secret = os.getenv("TWITTER_ACCESS_SECRET")
+
+        auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
+        auth.set_access_token(access_token, access_token_secret)
+        self.api = tweepy.API(auth)
+
+    def random_tweet(self, tags=[], send=False):
         # make random selections
         book = choice(self.books)
         book_id = book['id']
@@ -54,11 +66,16 @@ class Bot:
         for tag in tags:
             tweet += " %s" % tag
 
-        return tweet
+        if send:
+            status = self.api.update_status(tweet)
+        else:
+            status = tweepy.models.Status()
+            status.text = tweet
+
+        return status
 
 
 if __name__ == "__main__":
     bot = Bot()
-    for n in range(10):
-        tweet = bot.random_tweet()
-        print(tweet)
+    tweet = bot.random_tweet()
+    print(tweet.text)
