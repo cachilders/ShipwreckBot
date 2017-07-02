@@ -1,4 +1,4 @@
-# ShipwreckBot (NSFW)
+# PervyCliffNotes (NSFW)
 Teaching robots to love since 2017. We won't stop until the ghost of Alan Turing says so.
 
 Note (NSFW): This robot has a filthy mouth. Probably shouldn't whip it out during work hours.
