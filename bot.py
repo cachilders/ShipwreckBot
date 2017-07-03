@@ -58,8 +58,8 @@ class Bot:
 
         # populate tweet
         tweet = self.base_tweet % \
-            (char1['name'], verb['name'],
-             char2['name'], adjective['name'],
+            (char1['name'].title(), verb['name'],
+             char2['name'].title(), adjective['name'],
              part['name'], place['name'])
 
         # add tags
